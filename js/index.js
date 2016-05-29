@@ -1,4 +1,5 @@
 ﻿(function(){
+	var imgUrl = 'http://7xtawy.com1.z0.glb.clouddn.com/tinyheart';
 	var can1, can2;   //canvas1画布 ,   canvas2画布
 	var ctx1, ctx2;   //两个画笔
 	var canWid, canHei;  //画布的宽高
@@ -15,11 +16,11 @@
 
 		lastframetime = Date.now();
 		jzk.gameLoop();
-		
+
 
 	}
 	jzk.init = function(){
-		can1 = document.getElementById('canvas1');   
+		can1 = document.getElementById('canvas1');
 		ctx1 = can1.getContext('2d');  //上面的canvas
 		can2 = document.getElementById('canvas2');
 		ctx2 = can2.getContext('2d');   //下面的canvas
@@ -56,11 +57,11 @@
 		haloOb = new haloObeject();
 		haloOb.init();
 
-		dustOb = new dustObject(); 
+		dustOb = new dustObject();
 		dustOb.init();
 	}
 	jzk.gameLoop = function(){   //使用帧绘画，一直在画的东西
-		requestAnimFrame(jzk.gameLoop); 
+		requestAnimFrame(jzk.gameLoop);
 		var now = Date.now();    //1970 00:00:00 到现在的毫秒数
 		diffframetime = now - lastframetime;
 		lastframetime = now;
@@ -73,7 +74,7 @@
 		aneOb.drawAne();  // 画海葵部分
 		computeFruit();  //根据果实出现个数再出生果实
 		fruitOb.drawFruit();  //画果实部分
-		
+
 		ctx1.clearRect(0, 0, canWid, canHei);    //清除画布1
 		momOb.drawMom();   //画鱼妈妈
 		babyOb.drawBaby();  //画小鱼
@@ -89,7 +90,7 @@
 	}
 	jzk.onMouseMove = function(e){     //鼠标移动事件，layerX是FF浏览器特有的。
 		if(!scoreOb.gameOver){  //如果游戏没有结束
-			if(e.offsetX || e.layerX){         
+			if(e.offsetX || e.layerX){
 				mx = e.offsetX == undefined ? e.layerX : e.offsetX;
 				my = e.offsetY == undefined ? e.layerY : e.offsetY;
 			}
@@ -98,7 +99,7 @@
 	jzk.onClick = function(){
 		if(scoreOb.gameOver){   //如果游戏为结束状态
 			scoreOb.gameOver = false;
-			// aneOb.init(); 
+			// aneOb.init();
 			fruitOb.init();
 			momOb.init();
 			babyOb.init();
@@ -128,10 +129,10 @@
 				haloOb.born();
 				momOb.momBodyIndex = 0;     //大鱼体力变0
 				var num = scoreOb.doubleNum * scoreOb.fruitNum;
-				var index = babyOb.babyBodyIndex - num;   
+				var index = babyOb.babyBodyIndex - num;
 				if(index < 0){
 					index = 0;  //如果下标小于0， 则等于0
-				}    
+				}
 
 				var strength = scoreOb.strength + (index/2).toFixed(0);
 				if(strength > 10){
@@ -139,7 +140,7 @@
 				}
 				scoreOb.strength = strength;
 				babyOb.babyBodyIndex = index;  //小鱼身体图片下标减小，身体变红
-				scoreOb.computeScore();   //计算总分, 
+				scoreOb.computeScore();   //计算总分,
 			}
 		}
 	}
@@ -147,16 +148,16 @@
 
 	// *******************************************************画布2上绘制东西  （背景，海葵，果实）**********************
 	// ******************************************************************************************************************
-	window.can2App = {};   
+	window.can2App = {};
 	can2App.drawBackgorund = function(){
 		var img = new Image();
-		img.src= './images/background.jpg';
+		img.src= imgUrl + 'background.jpg';
 		ctx2.drawImage(img,0,0,canWid,canHei);
 	}
 
 
 	//********************************************************************//定义海葵类****************************
-	var aneObject = function(){    
+	var aneObject = function(){
 		this.num = 50;
 		//start point, controll point , end point
 		this.rootx = [];
@@ -194,7 +195,7 @@
 	}
 
 	//********************************************************************//定义果实类****************************
-	var fruitObject = function(){     
+	var fruitObject = function(){
 		this.num = 30;
 		this.x = [];
 		this.y = [];
@@ -207,8 +208,8 @@
 		this.blue = new Image();
 	}
 	fruitObject.prototype.init = function(){
-		this.orange.src = './images/fruit.png';
-		this.blue.src = './images/blue.png';
+		this.orange.src = imgUrl + 'fruit.png';
+		this.blue.src = imgUrl + 'blue.png';
 		for(var i = 0; i< this.num; i++){
 			this.x[i] = this.y[i] = 0;
 			this.speed[i] = Math.random() * 0.015 + 0.005;   //[0.005  ,  0.02)
@@ -223,14 +224,14 @@
 				//find an ane, grow, fly up...
 				if(this.size[i] <= 16){   //长大状态
 					this.grow[i] = false;
-					this.size[i] += this.speed[i] * diffframetime * 0.8; 
+					this.size[i] += this.speed[i] * diffframetime * 0.8;
 				}else{   //已经长大,向上漂浮
 					this.grow[i] = true;
 					this.y[i] -= this.speed[i] * 5 * diffframetime;
 				}
 				var pic = this.orange;
 				if(this.type[i] == 'blue')   pic = this.blue;
-				
+
 				ctx2.drawImage(pic, this.x[i] - this.size[i] * 0.5, this.y[i] - this.size[i] * 0.5, this.size[i], this.size[i]);
 				if(this.y[i] < 8){
 					this.alive[i] = false;
@@ -260,7 +261,7 @@
 			if(fruitOb.alive[i])  count ++;
 		}
 		if(count < 15){
-			bornFruit();		//出生一个果实 
+			bornFruit();		//出生一个果实
 			return false;
 		}
 	}
@@ -276,10 +277,10 @@
 
 	//****************************************************************************************画布1上绘制东西****************
 	// **********************************************************************************************************************
-	window.can1App = {};  
+	window.can1App = {};
 
 	//********************************************************************//定义鱼妈妈类*********************
-	var momObject = function(){       
+	var momObject = function(){
 		this.x = 0;
 		this.y = 0;
 		this.angle;     //大鱼的角度
@@ -303,17 +304,17 @@
 
 		for(var i = 0;i< 8; i++){   //大鱼尾巴
 			this.momTailArr[i] = new Image();
-			this.momTailArr[i].src = './images/bigTail'+ i +'.png';
+			this.momTailArr[i].src = imgUrl + 'bigTail'+ i +'.png';
 		}
 		for(var i = 0;i< 2; i++){   //大鱼眼睛
 			this.momEyeArr[i] = new Image();
-			this.momEyeArr[i].src = './images/bigEye'+ i +'.png';
+			this.momEyeArr[i].src = imgUrl + 'bigEye'+ i +'.png';
 		}
-		for(var i = 0;i< 8; i++){   
+		for(var i = 0;i< 8; i++){
 			this.momOrangeArr[i] = new Image();         //大鱼橙色身体
-			this.momOrangeArr[i].src = './images/bigSwim'+ i +'.png';
+			this.momOrangeArr[i].src = imgUrl + 'bigSwim'+ i +'.png';
 			this.momBlueArr[i] = new Image();           //大鱼蓝色身体
-			this.momBlueArr[i].src = './images/bigSwimBlue'+ i +'.png';
+			this.momBlueArr[i].src = imgUrl + 'bigSwimBlue'+ i +'.png';
 		}
 	}
 	momObject.prototype.drawMom = function(){
@@ -330,8 +331,8 @@
 		this.momTailTimer += diffframetime;
 		if(this.momTailTimer > 50){
 			this.momTailIndex = (this.momTailIndex + 1) % 8;
-			this.momTailTimer %= 50; 
-		} 
+			this.momTailTimer %= 50;
+		}
 
 		this.momEyeTimer += diffframetime;
 		if(this.momEyeTimer > this.momEyeInterval){
@@ -367,7 +368,7 @@
 
 
 	//********************************************************************//定义小鱼类***************************
-	var babyObject = function(){       
+	var babyObject = function(){
 		this.x = 0;
 		this.y = 0;
 		this.angle;     //大鱼的角度
@@ -391,15 +392,15 @@
 		this.angle = 0;
 		for(var i = 0;i < 8;i++){    //初始化小鱼的尾巴图片数组
 			this.babyTailArr[i] = new Image();
-			this.babyTailArr[i].src = './images/babyTail'+ i +'.png';
+			this.babyTailArr[i].src = imgUrl + 'babyTail'+ i +'.png';
 		}
 		for(var i = 0;i < 2;i++){   //初始化小鱼的眼睛图片数组
 			this.babyEyeArr[i] = new Image();
-			this.babyEyeArr[i].src = './images/babyEye'+ i +'.png';
+			this.babyEyeArr[i].src = imgUrl + 'babyEye'+ i +'.png';
 		}
 		for(var i = 0;i < 20;i++){   //初始化小鱼的身体图片数组
 			this.babyBodyArr[i] = new Image();
-			this.babyBodyArr[i].src = './images/babyFade'+ i +'.png';
+			this.babyBodyArr[i].src = imgUrl + 'babyFade'+ i +'.png';
 		}
 	}
 	babyObject.prototype.drawBaby = function(){
@@ -413,7 +414,7 @@
 		var beta = Math.atan2(deltaY, deltaX) + Math.PI;
 		this.angle = lerpAngle(beta, this.angle, 0.6);    //获得每一次倾向于大鱼旋转的角度
 
-		this.babyTailTimer += diffframetime; 
+		this.babyTailTimer += diffframetime;
 		if(this.babyTailTimer > 50){
 			this.babyTailIndex = (this.babyTailIndex + 1) % 8;   //获得尾巴图片数组下标
 			this.babyTailTimer %= 50;
@@ -425,7 +426,7 @@
 			this.babyEyeTimer %= this.babyEyeInterval;
 
 			if(this.babyEyeIndex == 0){       //如果下一帧是闭眼睛状态，时间间隔为2－3秒
-				this.babyEyeInterval = Math.random() * 1500 + 1500;    
+				this.babyEyeInterval = Math.random() * 1500 + 1500;
 			}else{
 				this.babyEyeInterval = 200;
 			}
@@ -488,12 +489,12 @@
 			ctx1.fillStyle = "red";
 		}
 		ctx1.fillText(scoreOb.strength, 710, 45);
-	
+
 		if(scoreOb.gameOver){
 			this.alpha += diffframetime * 0.0005;
 			if(this.alpha > 1){
 				this.alpha = 1;
-			}   
+			}
 			ctx1.font = '40px verdana';
 			ctx1.shadowBlur = 10;
 			ctx1.shadowColor = "white";
@@ -511,7 +512,7 @@
 		this.fruitNum = 0;
 		this.doubleNum = 1;
 	}
-	
+
 
 	//********************************************************************//大鱼吃果实波浪类*************************
 	var waveObject = function(){
@@ -540,11 +541,11 @@
 					return false;
 				}
 				var alpha = 1 - this.r[i] / 60;
-				
+
 				ctx1.strokeStyle = "rgba(255, 255, 255, "+ alpha +")";
 				ctx1.beginPath();
 				ctx1.arc(this.x[i], this.y[i], this.r[i], 0, 2 * Math.PI);   //画圆，
-				ctx1.stroke();	
+				ctx1.stroke();
 			}
 		}
 		ctx1.restore();
@@ -589,11 +590,11 @@
 					return false;
 				}
 				var alpha = 1 - this.r[i] / 100;
-				
+
 				ctx1.strokeStyle = "rgba(203, 91, 0, "+ alpha +")";
 				ctx1.beginPath();
 				ctx1.arc(this.x[i], this.y[i], this.r[i], 0, 2 * Math.PI);   //画圆，
-				ctx1.stroke();	
+				ctx1.stroke();
 			}
 		}
 		ctx1.restore();
@@ -621,7 +622,7 @@
 	dustObject.prototype.init = function(){
 		for(var i =0; i< 7; i++){
 			this.dustPic[i] = new Image();
-			this.dustPic[i].src = './images/dust'+ i +'.png';
+			this.dustPic[i].src = imgUrl + 'dust'+ i +'.png';
 		}
 		for(var i = 0;i< this.num; i++){
 			this.x[i] = Math.random() * canWid;
@@ -639,14 +640,3 @@
 		}
 	}
 })();
-
-
-
-
-
-
-
-
-
-
-
