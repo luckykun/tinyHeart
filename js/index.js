@@ -168,10 +168,10 @@
 	}
 	aneObject.prototype.init = function(){
 		for (var i = 0; i< this.num; i++){
-			this.rootx[i] = (i * 18 + Math.random() * 30).toFixed(2);
+			this.rootx[i] = i * 18 + Math.random() * 30;
 			this.headx[i] = this.rootx[i];
 			this.heady[i] = (canHei - 220) + Math.random() * 50;
-			this.amp[i] = Math.random() * 50 + 100;
+			this.amp[i] = Math.random() * 50 + 60;
 		}
 	}
 	aneObject.prototype.drawAne = function(){
@@ -185,10 +185,10 @@
 		ctx2.strokeStyle = '#3b154e';
 		for(var i = 0; i< this.num; i++){
 			//beginPath, moveTo,lineTo,lineWidth, strokeStyle, lineCap, stroke;
-			var x = this.rootx[i] + l * this.beta;
+			var endx = this.headx[i] + l * this.amp[i];
 			ctx2.beginPath();
 			ctx2.moveTo(this.rootx[i], canHei);     //起始点
-			ctx2.quadraticCurveTo(this.rootx[i], canHei - 80, this.rootx[i], this.heady[i]);  //控制点  和  结束点的x，y
+			ctx2.quadraticCurveTo(this.rootx[i], canHei - 100, endx, this.heady[i]);  //控制点  和  结束点的x，y
 			ctx2.stroke();
 		}
 		ctx2.restore();
