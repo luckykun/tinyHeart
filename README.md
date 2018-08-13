@@ -1,7 +1,7 @@
 # 使用说明
 此项目是一个基于canvas和原生js开发的游戏。整个文件夹直接下载下来即可运行，不需要安装任何插件。
 
-[点这里去玩一下](http://luckykun.com/work/2016-05-30/tiny-heart-demo.html)
+[点这里去玩一下](https://ifyt.github.io/tinyHeart/dist/index.html)
 
 # 游戏规则
 1. 大鱼跟着鼠标的位置移动而吃到果实，如吃到红色果实，身体变红，画布下方的个数加1；如吃到蓝色果实，身体变蓝，画布下方的倍数加1。
