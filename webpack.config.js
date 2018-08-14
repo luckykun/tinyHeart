@@ -52,6 +52,34 @@ module.exports = {
           ]
         })
       },
+      {
+        test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)$/i,
+        use: [{
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    /* 图片大小小于10000字节限制时会自动转成 base64 码引用，可以减少http请求*/
+                    name: 'images/[hash:8].[name].[ext]'
+                }
+            },
+            /*对图片进行压缩*/
+            {
+                loader: 'image-webpack-loader',
+                query: {
+                    progressive: true,
+                    optimizationLevel: 7,
+                    interlaced: false,
+                    pngquant: {
+                        quality: '65-90',
+                        speed: 4
+                    },
+                    webp: {
+                        quality: 75 //将png文件压缩成webp格式
+                    }
+                }
+            }
+        ]
+    }
     ]
   },
   mode: 'production',
