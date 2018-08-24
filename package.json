@@ -1,0 +1,36 @@
+{
+  "name": "tinyheart",
+  "version": "1.0.0",
+  "description": "此项目是一个基于canvas和原生js开发的游戏。整个文件夹直接下载下来即可运行，不需要安装任何插件。",
+  "scripts": {
+    "build": "webpack",
+    "server": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ifyt/tinyHeart.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ifyt/tinyHeart/issues"
+  },
+  "homepage": "https://github.com/ifyt/tinyHeart#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.1.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^4.3.1",
+    "img-loader": "^3.0.0",
+    "postcss-loader": "^3.0.0",
+    "style-loader": "^0.22.1",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  }
+}
